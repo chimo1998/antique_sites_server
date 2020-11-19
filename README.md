@@ -1,2 +1,2 @@
-# historic_sites_server
-Server for Yuntech historic sites protection project
+# antique_sites_server
+Server for Yuntech antique sites protection project
