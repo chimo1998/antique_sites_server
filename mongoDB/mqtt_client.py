@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
+from mongo import Database
 
-class Subscriber:
+class Subscriber():
     URL = "broker.hivemq.com"
     PORT = 1883
     TOPIC = "sensor"
@@ -17,6 +18,7 @@ class Subscriber:
         self.client = None
         self.connected = False
 
+
     def __call__(self):
         self.start()
 
@@ -29,10 +31,12 @@ class Subscriber:
         print("Connected")
         self.connected = True
         self.client.subscribe(self.topic)
+        print(rc)
 
     def on_message(self, client, userdata, msg):
         # upload to mongo
-        print(msg.topic + " " + msg.payload.decode('utf-8'))
+        db = Database()
+        print(db.insert('sensor',msg.payload.decode('utf-8')))
 
     def on_disconnect(self, client, userdata, rc):
         print("mqtt diconnected",rc)
